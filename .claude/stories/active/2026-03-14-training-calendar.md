@@ -34,7 +34,7 @@ There is NO warning error in the console.
 ## Technical Notes
 
 - **Target app**: [`react-app`]
-- **State management**: [Zustand store]
+- **State management**: [React Context + useReducer]
 - **API integration**: [existing store]
 - **New files expected**: [`src/components/...`, `src/hooks/...`, `src/types/...`]
 - **Performance considerations**: [Require Accessibility like label, aria, ...]

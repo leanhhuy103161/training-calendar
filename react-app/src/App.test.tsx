@@ -1,8 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import App from './App'
-import { useCalendarStore } from '@/stores/calendar-store'
-import { mockWeek } from '@/data/mock-week'
 
 vi.mock('@dnd-kit/core', () => ({
   DndContext: ({ children }: { children: React.ReactNode }) => <>{children}</>,
@@ -32,10 +30,6 @@ vi.mock('@dnd-kit/utilities', () => ({
 }))
 
 describe('App', () => {
-  beforeEach(() => {
-    useCalendarStore.setState({ week: mockWeek })
-  })
-
   it('renders the training calendar region', () => {
     render(<App />)
     expect(screen.getByRole('region', { name: 'Training calendar' })).toBeInTheDocument()

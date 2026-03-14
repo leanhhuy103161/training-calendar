@@ -5,6 +5,10 @@ import ExerciseFormModal from './ExerciseFormModal'
 import { useCalendarStore } from '@/stores/calendar-store'
 import type { Exercise } from '@/types'
 
+vi.mock('@/stores/calendar-store', () => ({
+  useCalendarStore: vi.fn(),
+}))
+
 const exercise: Exercise = {
   id: 'ex-1',
   name: 'Bench Press',
@@ -12,17 +16,24 @@ const exercise: Exercise = {
   weightInfo: '50 lb x 5',
 }
 
+let mockAddExercise: ReturnType<typeof vi.fn>
+let mockUpdateExercise: ReturnType<typeof vi.fn>
+let mockDeleteExercise: ReturnType<typeof vi.fn>
+
 beforeEach(() => {
-  useCalendarStore.setState({
+  mockAddExercise = vi.fn()
+  mockUpdateExercise = vi.fn()
+  mockDeleteExercise = vi.fn()
+  vi.mocked(useCalendarStore).mockReturnValue({
     week: [],
     moveWorkout: vi.fn(),
     moveExercise: vi.fn(),
     addWorkout: vi.fn(),
     updateWorkout: vi.fn(),
     deleteWorkout: vi.fn(),
-    addExercise: vi.fn(),
-    updateExercise: vi.fn(),
-    deleteExercise: vi.fn(),
+    addExercise: mockAddExercise,
+    updateExercise: mockUpdateExercise,
+    deleteExercise: mockDeleteExercise,
   })
 })
 
@@ -70,7 +81,7 @@ describe('ExerciseFormModal — add mode', () => {
     await userEvent.type(screen.getByLabelText(/^sets$/i), '4')
     await userEvent.type(screen.getByLabelText(/weight info/i), '80 lb x 5')
     fireEvent.click(screen.getByRole('button', { name: 'Add' }))
-    expect(useCalendarStore.getState().addExercise).toHaveBeenCalledWith('wo-1', {
+    expect(mockAddExercise).toHaveBeenCalledWith('wo-1', {
       name: 'Squat',
       sets: 4,
       weightInfo: '80 lb x 5',
@@ -116,7 +127,7 @@ describe('ExerciseFormModal — edit mode', () => {
     await userEvent.clear(nameInput)
     await userEvent.type(nameInput, 'Incline Press')
     fireEvent.click(screen.getByRole('button', { name: 'Save' }))
-    expect(useCalendarStore.getState().updateExercise).toHaveBeenCalledWith('ex-1', {
+    expect(mockUpdateExercise).toHaveBeenCalledWith('ex-1', {
       name: 'Incline Press',
       sets: 3,
       weightInfo: '50 lb x 5',
@@ -128,7 +139,7 @@ describe('ExerciseFormModal — edit mode', () => {
     const onClose = vi.fn()
     render(<ExerciseFormModal mode="edit" exercise={exercise} onClose={onClose} />)
     fireEvent.click(screen.getByRole('button', { name: 'Delete' }))
-    expect(useCalendarStore.getState().deleteExercise).toHaveBeenCalledWith('ex-1')
+    expect(mockDeleteExercise).toHaveBeenCalledWith('ex-1')
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 })

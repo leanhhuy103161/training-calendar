@@ -32,7 +32,7 @@ The assignment was to build a **weekly training calendar** with the following co
 - Zero console warnings or errors
 - Bonus: Add/Edit forms for workouts and exercises
 
-The stack was already decided: **React 19 + Vite + Tailwind CSS v4 + TypeScript (strict) + Zustand + dnd-kit**.
+The stack was already decided: **React 19 + Vite + Tailwind CSS v4 + TypeScript (strict) + React Context + dnd-kit**.
 
 ---
 
@@ -103,7 +103,7 @@ The completed story lives at `.claude/stories/active/2026-03-14-training-calenda
 
 - **Business Context**: Plain-language explanation of what the calendar does
 - **Acceptance Criteria**: Each AC written in testable terms (AC0 through AC4), covering visual fidelity, drag-and-drop behavior, and zero console errors
-- **Technical Notes**: Target app (`react-app`), state management approach (Zustand), and a pointer to reference patterns in the codebase
+- **Technical Notes**: Target app (`react-app`), state management approach (React Context + useReducer), and a pointer to reference patterns in the codebase
 - **Design Reference**: Paths to all `figma-to-code` outputs
 - **Test Strategy**: Which components need unit tests, which flows need E2E coverage
 - **Definition of Done**: Checklist including coverage thresholds, lint, TypeScript, accessibility, and Conventional Commits
@@ -141,7 +141,7 @@ Before asking the agent to write any code, I requested an **explicit implementat
 
 The plan covered:
 1. Type definitions (`Exercise`, `Workout`, `CalendarDay`, drag data types)
-2. Zustand store (`moveWorkout`, `moveExercise` mutations)
+2. React Context + useReducer (`moveWorkout`, `moveExercise` mutations)
 3. Mock data structure for the initial week
 4. Component hierarchy: `TrainingCalendar` → `DayColumn` → `WorkoutCard` → `ExerciseCard`
 5. `useCalendarDnd` hook — drag state, sensors, event handlers
@@ -162,7 +162,7 @@ With the approved plan, the agent worked step by step following the rules baked 
 - Extracted drag logic into a custom hook (`useCalendarDnd`) rather than bloating components
 - Co-located test files (`ComponentName.test.tsx`) alongside each component
 - Registered all Figma design tokens in `src/index.css` `@theme` block
-- Used Zustand for shared state with immutable update patterns
+- Used React Context + useReducer for shared state with immutable update patterns
 - Semantic HTML + ARIA labels on every interactive element
 - `cn()` utility for all conditional class composition
 
@@ -311,7 +311,7 @@ ai-workflow/
         ├── hooks/
         │   └── useCalendarDnd.ts      ← All drag-and-drop logic
         ├── stores/
-        │   └── calendar-store.ts      ← Zustand store with full CRUD
+        │   └── calendar-store.tsx     ← React Context + useReducer store with full CRUD
         └── types/
             └── index.ts               ← TypeScript interfaces
 ```

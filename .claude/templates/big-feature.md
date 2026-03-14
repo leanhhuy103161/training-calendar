@@ -53,7 +53,7 @@ Reference existing patterns in the codebase.
 -->
 
 - **Target app**: [`react-app` | `micro-frontend/host` | `micro-frontend/dashboard`]
-- **State management**: [Zustand store / React local state / React context]
+- **State management**: [React Context + useReducer / React local state]
 - **API integration**: [REST endpoint / mock data / existing store]
 - **New files expected**: [`src/components/...`, `src/hooks/...`, `src/types/...`]
 - **Performance considerations**: [lazy loading, pagination, virtual lists, etc.]

@@ -35,7 +35,7 @@ So that **[outcome]**.
 
 - **Target app**: [`react-app` | `micro-frontend/host` | `micro-frontend/dashboard`]
 - **Target files**: [`src/components/...`, `src/hooks/...`]
-- **State**: [local state / name of Zustand store]
+- **State**: [local state / React Context]
 - **Follow pattern from**: [path to existing component to reference]
 
 ## Design Reference

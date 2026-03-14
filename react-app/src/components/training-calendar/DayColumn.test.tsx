@@ -25,6 +25,10 @@ vi.mock('@dnd-kit/utilities', () => ({
   CSS: { Transform: { toString: () => '' } },
 }))
 
+vi.mock('@/stores/calendar-store', () => ({
+  useCalendarStore: vi.fn(),
+}))
+
 const day: CalendarDay = {
   date: 5,
   dayOfWeek: 'MON',
@@ -41,7 +45,7 @@ const day: CalendarDay = {
 }
 
 beforeEach(() => {
-  useCalendarStore.setState({
+  vi.mocked(useCalendarStore).mockReturnValue({
     week: [day],
     moveWorkout: vi.fn(),
     moveExercise: vi.fn(),

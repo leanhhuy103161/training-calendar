@@ -5,20 +5,31 @@ import WorkoutFormModal from './WorkoutFormModal'
 import { useCalendarStore } from '@/stores/calendar-store'
 import type { Workout } from '@/types'
 
+vi.mock('@/stores/calendar-store', () => ({
+  useCalendarStore: vi.fn(),
+}))
+
 const workout: Workout = {
   id: 'wo-1',
   name: 'Chest Day',
   exercises: [],
 }
 
+let mockAddWorkout: ReturnType<typeof vi.fn>
+let mockUpdateWorkout: ReturnType<typeof vi.fn>
+let mockDeleteWorkout: ReturnType<typeof vi.fn>
+
 beforeEach(() => {
-  useCalendarStore.setState({
+  mockAddWorkout = vi.fn()
+  mockUpdateWorkout = vi.fn()
+  mockDeleteWorkout = vi.fn()
+  vi.mocked(useCalendarStore).mockReturnValue({
     week: [{ date: 5, dayOfWeek: 'MON', workouts: [workout], isToday: false }],
     moveWorkout: vi.fn(),
     moveExercise: vi.fn(),
-    addWorkout: vi.fn(),
-    updateWorkout: vi.fn(),
-    deleteWorkout: vi.fn(),
+    addWorkout: mockAddWorkout,
+    updateWorkout: mockUpdateWorkout,
+    deleteWorkout: mockDeleteWorkout,
     addExercise: vi.fn(),
     updateExercise: vi.fn(),
     deleteExercise: vi.fn(),
@@ -57,7 +68,7 @@ describe('WorkoutFormModal — add mode', () => {
     render(<WorkoutFormModal mode="add" dayIndex={2} onClose={onClose} />)
     await userEvent.type(screen.getByLabelText(/workout name/i), 'Push Day')
     fireEvent.click(screen.getByRole('button', { name: 'Add' }))
-    expect(useCalendarStore.getState().addWorkout).toHaveBeenCalledWith(2, { name: 'Push Day' })
+    expect(mockAddWorkout).toHaveBeenCalledWith(2, { name: 'Push Day' })
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
@@ -105,9 +116,7 @@ describe('WorkoutFormModal — edit mode', () => {
     await userEvent.clear(input)
     await userEvent.type(input, 'Back Day')
     fireEvent.click(screen.getByRole('button', { name: 'Save' }))
-    expect(useCalendarStore.getState().updateWorkout).toHaveBeenCalledWith('wo-1', {
-      name: 'Back Day',
-    })
+    expect(mockUpdateWorkout).toHaveBeenCalledWith('wo-1', { name: 'Back Day' })
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 
@@ -115,7 +124,7 @@ describe('WorkoutFormModal — edit mode', () => {
     const onClose = vi.fn()
     render(<WorkoutFormModal mode="edit" workout={workout} onClose={onClose} />)
     fireEvent.click(screen.getByRole('button', { name: 'Delete' }))
-    expect(useCalendarStore.getState().deleteWorkout).toHaveBeenCalledWith('wo-1')
+    expect(mockDeleteWorkout).toHaveBeenCalledWith('wo-1')
     expect(onClose).toHaveBeenCalledTimes(1)
   })
 })

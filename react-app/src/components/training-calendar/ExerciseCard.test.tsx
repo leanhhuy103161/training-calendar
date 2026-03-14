@@ -19,6 +19,10 @@ vi.mock('@dnd-kit/utilities', () => ({
   CSS: { Transform: { toString: () => '' } },
 }))
 
+vi.mock('@/stores/calendar-store', () => ({
+  useCalendarStore: vi.fn(),
+}))
+
 const exercise: Exercise = {
   id: 'ex-1',
   name: 'Bench Press Med...',
@@ -27,7 +31,7 @@ const exercise: Exercise = {
 }
 
 beforeEach(() => {
-  useCalendarStore.setState({
+  vi.mocked(useCalendarStore).mockReturnValue({
     week: [],
     moveWorkout: vi.fn(),
     moveExercise: vi.fn(),
