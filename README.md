@@ -2,6 +2,8 @@
 
 This document explains the end-to-end process used to deliver this assignment — from receiving the task, through AI-assisted development, to the final commit and handoff.
 
+![Design Reference](figma-to-code/output/screenshot.png)
+
 ---
 
 ## Table of Contents
