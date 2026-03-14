@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/huyanhle-spm/ai-workflow -maxdepth 3 -name *.config.* -o -name tailwind* -o -name .env*)",
+      "Bash(find /Users/huyanhle-spm/ai-workflow -name Dockerfile* -type f)"
+    ]
+  }
+}
