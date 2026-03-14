@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-workout-title: #5a57cb;
+  --color-day-header: #6a7988;
+  --color-date-number: #728096;
+  --color-exercise-weight: #95a6b7;
+  --color-exercise-sets: #919cad;
+  --color-exercise-name: #4a5568;
+  --color-card-border: #e2e8f0;
+  --color-day-bg: #f3f5f8;
+  --color-add-button: #a0a8b1;
+  --color-add-button-hover: #8a929b;
+  --color-today-accent: #726ee4;
+  --color-menu-dots: #726ee4;
+  --color-drag-day: #f0f0ff;
+  --color-drag-workout: #f8f8ff;
+
+  --font-family-sans: 'Open Sans', sans-serif;
+
+  --font-size-label: 0.625rem;    /* 10px — labels, day headers, set counts */
+  --font-size-caption: 0.6875rem; /* 11px — date numbers, button text */
+  --font-size-input: 0.75rem;     /* 12px — form inputs */
+  --font-size-body: 0.8125rem;    /* 13px — exercise names, modal titles */
+
+  --shadow-card: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
+
+  --radius-card: 3px;
+  --radius-day: 6px;
+}
+
+@keyframes modal-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes modal-overlay-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes modal-panel-in {
+  from { opacity: 0; transform: scale(0.95) translateY(-8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);    }
+}
+
+@keyframes modal-panel-out {
+  from { opacity: 1; transform: scale(1)    translateY(0);    }
+  to   { opacity: 0; transform: scale(0.95) translateY(-8px); }
+}
+
+@layer utilities {
+  .animate-modal-overlay-in  { animation: modal-overlay-in  150ms ease-out; }
+  .animate-modal-overlay-out { animation: modal-overlay-out 150ms ease-in forwards; }
+  .animate-modal-panel-in    { animation: modal-panel-in    150ms ease-out; }
+  .animate-modal-panel-out   { animation: modal-panel-out   150ms ease-in forwards; }
+}

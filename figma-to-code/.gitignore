@@ -1,0 +1,7 @@
+node_modules/
+output/
+.env
+.DS_Store
+*.bak
+*.bak2
+*.broken
